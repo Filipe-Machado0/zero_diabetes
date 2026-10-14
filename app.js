@@ -1248,8 +1248,9 @@ function renderScreen() {
         </button>
       `;
       screenDiv.querySelectorAll('.btn-checkout-trigger').forEach(btn => {
-        btn.onclick = () => {
-          window.location.href = CONFIG.checkoutUrl;
+        btn.onclick = (e) => {
+          e.preventDefault();
+          openRouletteModal();
         };
       });
 
@@ -1276,3 +1277,377 @@ function renderScreen() {
 
 // Inicializar na primeira tela
 renderScreen();
+
+/* =========================================================================
+   SISTEMA DA ROLETA DE DESCONTOS (POP-UP INTERATIVO)
+   ========================================================================= */
+const rouletteState = {
+  hasSpun: false,
+  isSpinning: false,
+  wonCoupon: 'CUPOM5',
+  currentRotation: 0
+};
+
+const ROULETTE_SEGMENTS = [
+  { label: '5% OFF', sub: 'GANHOU!', color: '#16a34a', text: '#ffffff' },      // 0: Vencedor garantido
+  { label: 'TENTE', sub: 'DE NOVO', color: '#1e293b', text: '#ffffff' },        // 1
+  { label: '10% OFF', sub: 'DESCONTO', color: '#f59e0b', text: '#ffffff' },     // 2
+  { label: '15% OFF', sub: 'DESCONTO', color: '#dc2626', text: '#ffffff' },     // 3
+  { label: 'BÔNUS', sub: 'ESPECIAL', color: '#7c3aed', text: '#ffffff' },       // 4
+  { label: '20% OFF', sub: 'DESCONTO', color: '#0284c7', text: '#ffffff' },     // 5
+  { label: '25% OFF', sub: 'DESCONTO', color: '#e11d48', text: '#ffffff' },     // 6
+  { label: 'QUASE', sub: 'LÁ!', color: '#334155', text: '#ffffff' }             // 7
+];
+
+function drawRouletteWheel(canvas, rotationAngle) {
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const width = canvas.clientWidth || 280;
+  const height = canvas.clientHeight || 280;
+
+  if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+  }
+
+  ctx.save();
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, width, height);
+
+  const cx = width / 2;
+  const cy = height / 2;
+  const radius = Math.min(cx, cy) - 8;
+  const numSegments = ROULETTE_SEGMENTS.length;
+  const anglePerSeg = (2 * Math.PI) / numSegments;
+
+  // Borda externa dourada
+  ctx.beginPath();
+  ctx.arc(cx, cy, radius + 6, 0, 2 * Math.PI);
+  ctx.fillStyle = '#b45309';
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, radius + 2, 0, 2 * Math.PI);
+  ctx.fillStyle = '#f59e0b';
+  ctx.fill();
+
+  // Fatias
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(rotationAngle);
+
+  for (let i = 0; i < numSegments; i++) {
+    const seg = ROULETTE_SEGMENTS[i];
+    const startAngle = i * anglePerSeg - anglePerSeg / 2;
+    const endAngle = startAngle + anglePerSeg;
+
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.arc(0, 0, radius, startAngle, endAngle);
+    ctx.closePath();
+    ctx.fillStyle = seg.color;
+    ctx.fill();
+
+    // Linha divisória branca
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Texto da fatia
+    ctx.save();
+    const textAngle = i * anglePerSeg;
+    ctx.rotate(textAngle);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = seg.text;
+    ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+    ctx.shadowBlur = 3;
+
+    ctx.font = 'bold 13px Inter, sans-serif';
+    ctx.fillText(seg.label, radius - 20, -2);
+    ctx.font = '600 8.5px Inter, sans-serif';
+    ctx.fillText(seg.sub, radius - 20, 11);
+    ctx.restore();
+  }
+
+  // Lâmpadas decorativas na borda
+  const numDots = 24;
+  for (let d = 0; d < numDots; d++) {
+    const dotAngle = (d * 2 * Math.PI) / numDots;
+    const dotX = Math.cos(dotAngle) * (radius + 4);
+    const dotY = Math.sin(dotAngle) * (radius + 4);
+    ctx.beginPath();
+    ctx.arc(dotX, dotY, 2.5, 0, 2 * Math.PI);
+    ctx.fillStyle = d % 2 === 0 ? '#ffffff' : '#fef08a';
+    ctx.fill();
+  }
+
+  ctx.restore();
+
+  // Tampa central (Pino dourado 3D)
+  const centerGrad = ctx.createRadialGradient(cx - 3, cy - 3, 2, cx, cy, 26);
+  centerGrad.addColorStop(0, '#fef08a');
+  centerGrad.addColorStop(0.4, '#f59e0b');
+  centerGrad.addColorStop(1, '#b45309');
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, 24, 0, 2 * Math.PI);
+  ctx.fillStyle = centerGrad;
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+  ctx.shadowBlur = 8;
+  ctx.fill();
+
+  ctx.strokeStyle = '#ffffff';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // Estrela no centro
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 14px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.shadowBlur = 0;
+  ctx.fillText('★', cx, cy);
+
+  ctx.restore();
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toastNotification');
+  const toastMsg = document.getElementById('toastMessage');
+  if (toast && toastMsg) {
+    toastMsg.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => {
+      toast.classList.remove('show');
+    }, 2600);
+  }
+}
+
+function copyCouponToClipboard(code, silent = false) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).catch(() => fallbackCopy(code));
+  } else {
+    fallbackCopy(code);
+  }
+  if (!silent) {
+    showToast(`✓ Cupom ${code} copiado com sucesso!`);
+    const copyTxt = document.getElementById('copyBtnText');
+    if (copyTxt) {
+      copyTxt.textContent = 'Copiado! ✓';
+      setTimeout(() => { copyTxt.textContent = 'Copiar'; }, 2500);
+    }
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+}
+
+function triggerConfetti() {
+  const canvas = document.getElementById('confettiCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.parentElement.clientWidth;
+  canvas.height = canvas.parentElement.clientHeight;
+
+  const colors = ['#22c55e', '#f59e0b', '#ef4444', '#3b82f6', '#ec4899', '#eab308'];
+  const particles = [];
+  for (let i = 0; i < 60; i++) {
+    particles.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      vx: (Math.random() - 0.5) * 12,
+      vy: (Math.random() - 0.8) * 14,
+      size: Math.random() * 8 + 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotation: Math.random() * 360,
+      vRot: (Math.random() - 0.5) * 15,
+      gravity: 0.35,
+      opacity: 1
+    });
+  }
+
+  let startTime = performance.now();
+  function animate(now) {
+    const elapsed = now - startTime;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    let alive = false;
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += p.gravity;
+      p.rotation += p.vRot;
+      p.opacity = Math.max(0, 1 - elapsed / 2200);
+
+      if (p.opacity > 0 && p.y < canvas.height + 20) {
+        alive = true;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.opacity;
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+        ctx.restore();
+      }
+    });
+
+    if (alive && elapsed < 2500) {
+      requestAnimationFrame(animate);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+  requestAnimationFrame(animate);
+}
+
+function spinRoulette() {
+  if (rouletteState.isSpinning) return;
+  rouletteState.isSpinning = true;
+
+  const spinBtn = document.getElementById('btnGirarRoleta');
+  if (spinBtn) {
+    spinBtn.disabled = true;
+    spinBtn.textContent = 'GIRANDO... 🎰';
+  }
+
+  const canvas = document.getElementById('rouletteCanvas');
+  const spinDuration = 4200; // 4.2 segundos
+  const startTime = performance.now();
+  const startAngle = rouletteState.currentRotation;
+
+  // Alvo: Sempre parar exatamente na fatia 0 ("5% OFF").
+  // Como a fatia 0 está centrada em 0 rad, e o ponteiro está no topo (1.5 * PI = 270°),
+  // a rotação final necessária que alinha a fatia 0 com o topo é:
+  const fullSpins = 6;
+  const wobble = (Math.random() * 16 - 8) * (Math.PI / 180); // Variação suave de +/- 8 graus
+  const targetAngle = startAngle + (fullSpins * 2 * Math.PI) + (1.5 * Math.PI) - (startAngle % (2 * Math.PI)) + wobble;
+
+  function animate(now) {
+    const elapsed = now - startTime;
+    const t = Math.min(elapsed / spinDuration, 1);
+
+    // Desaceleração realista
+    const easeOut = 1 - Math.pow(1 - t, 3.6);
+    const currentAngle = startAngle + (targetAngle - startAngle) * easeOut;
+    rouletteState.currentRotation = currentAngle;
+
+    drawRouletteWheel(canvas, currentAngle);
+
+    if (t < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      rouletteState.isSpinning = false;
+      rouletteState.hasSpun = true;
+
+      // Vibração
+      if (navigator.vibrate) {
+        try { navigator.vibrate([100, 50, 100]); } catch (e) {}
+      }
+
+      // Confetes
+      triggerConfetti();
+
+      // Exibir área de vitória
+      setTimeout(() => {
+        const preSpin = document.getElementById('roulettePreSpin');
+        const postSpin = document.getElementById('roulettePostSpin');
+        if (preSpin) preSpin.style.display = 'none';
+        if (postSpin) postSpin.style.display = 'block';
+        showToast('🎉 Parabéns! Você ganhou 5% de desconto!');
+      }, 500);
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+function openRouletteModal() {
+  const modal = document.getElementById('rouletteModal');
+  const canvas = document.getElementById('rouletteCanvas');
+  if (!modal) return;
+
+  modal.classList.add('active');
+  modal.setAttribute('aria-hidden', 'false');
+
+  const preSpin = document.getElementById('roulettePreSpin');
+  const postSpin = document.getElementById('roulettePostSpin');
+  const spinBtn = document.getElementById('btnGirarRoleta');
+
+  if (rouletteState.hasSpun) {
+    if (preSpin) preSpin.style.display = 'none';
+    if (postSpin) postSpin.style.display = 'block';
+  } else {
+    if (preSpin) preSpin.style.display = 'block';
+    if (postSpin) postSpin.style.display = 'none';
+    if (spinBtn) {
+      spinBtn.disabled = false;
+      spinBtn.textContent = 'GIRAR A ROLETA AGORA! 🎰';
+    }
+  }
+
+  drawRouletteWheel(canvas, rouletteState.currentRotation);
+}
+
+function closeRouletteModal() {
+  const modal = document.getElementById('rouletteModal');
+  if (!modal) return;
+  modal.classList.remove('active');
+  modal.setAttribute('aria-hidden', 'true');
+}
+
+function initRouletteSystem() {
+  const canvas = document.getElementById('rouletteCanvas');
+  const spinBtn = document.getElementById('btnGirarRoleta');
+  const closeBtn = document.getElementById('rouletteCloseBtn');
+  const backdrop = document.getElementById('rouletteBackdrop');
+  const copyBtn = document.getElementById('btnCopyCoupon');
+  const checkoutWithCouponBtn = document.getElementById('btnIrCheckoutComCupom');
+
+  if (canvas) {
+    drawRouletteWheel(canvas, rouletteState.currentRotation);
+    window.addEventListener('resize', () => {
+      drawRouletteWheel(canvas, rouletteState.currentRotation);
+    });
+  }
+
+  if (spinBtn) {
+    spinBtn.onclick = spinRoulette;
+  }
+
+  if (closeBtn) {
+    closeBtn.onclick = closeRouletteModal;
+  }
+
+  if (backdrop) {
+    backdrop.onclick = closeRouletteModal;
+  }
+
+  if (copyBtn) {
+    copyBtn.onclick = () => {
+      copyCouponToClipboard(rouletteState.wonCoupon);
+    };
+  }
+
+  if (checkoutWithCouponBtn) {
+    checkoutWithCouponBtn.onclick = () => {
+      copyCouponToClipboard(rouletteState.wonCoupon, true);
+      showToast(`✓ Cupom ${rouletteState.wonCoupon} copiado! Redirecionando...`);
+      setTimeout(() => {
+        const sep = CONFIG.checkoutUrl.includes('?') ? '&' : '?';
+        window.location.href = `${CONFIG.checkoutUrl}${sep}cupom=${rouletteState.wonCoupon}`;
+      }, 550);
+    };
+  }
+}
+
+initRouletteSystem();

@@ -35,6 +35,64 @@
     <div id="screenContainer" class="screen-container"></div>
   </main>
 
+  <!-- Modal Pop-up Roleta de Descontos -->
+  <div id="rouletteModal" class="roulette-modal" aria-hidden="true">
+    <div class="roulette-backdrop" id="rouletteBackdrop"></div>
+    <div class="roulette-dialog">
+      <button class="roulette-close-btn" id="rouletteCloseBtn" type="button" aria-label="Fechar">✕</button>
+      
+      <!-- Cabeçalho -->
+      <div class="roulette-header">
+        <div class="roulette-badge">🎰 ROLETA DA SORTE</div>
+        <h3 class="roulette-title">Parabéns! Você ganhou 1 giro!</h3>
+        <p class="roulette-subtitle">Gire a roleta agora para tentar liberar um <strong>desconto exclusivo</strong> no seu Protocolo da Diabetes!</p>
+      </div>
+
+      <!-- Container da Roleta -->
+      <div class="roulette-wheel-container">
+        <div class="roulette-pointer"></div>
+        <canvas id="rouletteCanvas" width="280" height="280"></canvas>
+      </div>
+
+      <!-- Área Pré-giro -->
+      <div class="roulette-actions" id="roulettePreSpin">
+        <button class="btn-green-bubble roulette-spin-btn" id="btnGirarRoleta" type="button">
+          GIRAR A ROLETA AGORA! 🎰
+        </button>
+        <div class="roulette-micro-notice">🔒 Válido para 1 giro por participante.</div>
+      </div>
+
+      <!-- Área Pós-giro / Vitória (5% garantido) -->
+      <div class="roulette-result" id="roulettePostSpin" style="display:none;">
+        <div class="winner-congrats-tag">🎉 PARABÉNS! VOCÊ FOI PREMIADO(A)!</div>
+        <div class="winner-discount-amount">5% DE DESCONTO</div>
+        
+        <div class="coupon-ticket-box">
+          <div class="coupon-ticket-label">SEU CÓDIGO DE CUPOM:</div>
+          <div class="coupon-code-row">
+            <span class="coupon-code-text" id="couponCodeDisplay">CUPOM5</span>
+            <button type="button" class="btn-copy-coupon" id="btnCopyCoupon">
+              <span id="copyBtnText">Copiar</span>
+            </button>
+          </div>
+          <div class="coupon-ticket-hint">O cupom será copiado automaticamente ao continuar!</div>
+        </div>
+
+        <button class="btn-green-bubble roulette-checkout-btn" id="btnIrCheckoutComCupom" type="button">
+          APLICAR DESCONTO E IR PRO CHECKOUT! ✅
+        </button>
+      </div>
+
+      <!-- Canvas de Confetes -->
+      <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
+    </div>
+  </div>
+
+  <!-- Toast de Notificação -->
+  <div id="toastNotification" class="toast-notification">
+    <span id="toastMessage">Cupom copiado com sucesso!</span>
+  </div>
+
   <script src="audio-data.js"></script>
   <script src="app.js"></script>
 </body>
