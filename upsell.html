@@ -136,14 +136,15 @@
       letter-spacing: 0.5px;
     }
 
-    /* Headline Principal */
+    /* Headline Principal - Bem maior e mais destacada */
     .upsell-headline {
-      font-size: 22px;
+      font-size: clamp(26px, 7vw, 34px);
       font-weight: 900;
-      line-height: 1.25;
+      line-height: 1.15;
       color: #0f172a;
-      margin-bottom: 12px;
-      letter-spacing: -0.5px;
+      margin-bottom: 14px;
+      letter-spacing: -0.8px;
+      text-align: center;
     }
 
     .upsell-headline mark {
@@ -156,21 +157,22 @@
     }
 
     .upsell-subheadline {
-      font-size: 14.5px;
+      font-size: 15px;
       color: #475569;
-      line-height: 1.5;
-      margin-bottom: 20px;
+      line-height: 1.45;
+      margin-bottom: 18px;
+      text-align: center;
     }
 
-    /* Card da Especialista */
+    /* Card da Especialista - Compacto */
     .doctor-card {
       background: #f8fafc;
       border: 1.5px solid #e2e8f0;
       border-radius: var(--radius-xl);
-      padding: 16px;
-      margin-bottom: 22px;
+      padding: 12px 14px;
+      margin-bottom: 18px;
       display: flex;
-      gap: 14px;
+      gap: 12px;
       align-items: center;
       box-shadow: var(--shadow-sm);
     }
@@ -181,11 +183,11 @@
     }
 
     .doctor-avatar {
-      width: 68px;
-      height: 68px;
+      width: 56px;
+      height: 56px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2.5px solid #16a34a;
+      border: 2px solid #16a34a;
     }
 
     .doctor-verified-badge {
@@ -194,9 +196,9 @@
       right: -2px;
       background: #16a34a;
       color: #fff;
-      font-size: 10px;
-      width: 20px;
-      height: 20px;
+      font-size: 9px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -205,148 +207,244 @@
     }
 
     .doctor-info h4 {
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 800;
       color: #0f172a;
     }
 
     .doctor-info p {
-      font-size: 12px;
-      color: #64748b;
-      margin-top: 2px;
+      font-size: 11.5px;
+      color: #16a34a;
+      font-weight: 700;
     }
 
     .doctor-quote {
-      font-size: 12.5px;
+      font-size: 12px;
       color: #334155;
       font-style: italic;
-      margin-top: 6px;
-      line-height: 1.4;
+      margin-top: 2px;
+      line-height: 1.35;
     }
 
-    /* Box de Alerta Importante */
-    .alert-dieoff-box {
-      background: #fffbeb;
-      border: 1.5px solid #fde68a;
-      border-radius: var(--radius-lg);
-      padding: 16px;
-      margin-bottom: 22px;
-    }
-
-    .alert-dieoff-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13.5px;
-      font-weight: 800;
-      color: #b45309;
-      margin-bottom: 6px;
-    }
-
-    .alert-dieoff-text {
-      font-size: 13px;
-      color: #78350f;
-      line-height: 1.45;
-    }
-
-    /* O que é o Acelerador */
-    .section-title {
-      font-size: 17px;
-      font-weight: 900;
-      color: #0f172a;
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .features-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    .feature-card {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      background: #ffffff;
-      border: 1.5px solid #e2e8f0;
-      border-radius: var(--radius-lg);
-      padding: 14px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-      transition: transform 0.15s ease;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-2px);
-    }
-
-    .feature-icon-box {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      background: #f0fdf4;
-      color: #16a34a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-      border: 1px solid #bbf7d0;
-    }
-
-    .feature-body h5 {
-      font-size: 13.5px;
-      font-weight: 800;
-      color: #0f172a;
-      margin-bottom: 3px;
-    }
-
-    .feature-body p {
-      font-size: 12.5px;
-      color: #64748b;
-      line-height: 1.4;
-    }
-
-    /* Prova Social / Comparativo */
+    /* 1. CARD DA FOTO / PROVA REAL (PRIMEIRO) */
     .proof-card {
       background: #0f172a;
       border-radius: var(--radius-xl);
       padding: 16px;
       color: #ffffff;
-      margin-bottom: 24px;
+      margin-bottom: 18px;
       box-shadow: var(--shadow-md);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .proof-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
     }
 
     .proof-badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       background: #16a34a;
       color: #ffffff;
-      font-size: 10.5px;
-      font-weight: 800;
+      font-size: 11px;
+      font-weight: 900;
       padding: 4px 10px;
       border-radius: 6px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 10px;
+    }
+
+    .proof-status {
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #4ade80;
+      letter-spacing: 0.3px;
+    }
+
+    .proof-img-container {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 12px;
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      background: #000;
+    }
+
+    .proof-tag-before {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(220, 38, 38, 0.9);
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 900;
+      padding: 4px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(2px);
+    }
+
+    .proof-tag-after {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(22, 163, 74, 0.9);
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 900;
+      padding: 4px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(2px);
     }
 
     .proof-img {
       width: 100%;
       height: auto;
-      border-radius: 10px;
-      margin-bottom: 10px;
       display: block;
-      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .proof-caption {
-      font-size: 12px;
+    .proof-user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 10px 12px;
+      border-radius: 12px;
+    }
+
+    .proof-user-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #16a34a;
+      flex-shrink: 0;
+    }
+
+    .proof-user-name {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .proof-user-quote {
+      font-size: 11.5px;
       color: #cbd5e1;
-      text-align: center;
-      line-height: 1.4;
+      line-height: 1.35;
+      margin-top: 2px;
+    }
+
+    /* 2. CARD DO QUE É RECEBIDO (FORMATO DE CARD VISUAL E DIRETO AO PONTO) */
+    .package-container-card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .package-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .package-icon {
+      font-size: 22px;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .package-title {
+      font-size: 15px;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1.2;
+    }
+
+    .package-subtitle {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .package-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    @media (min-width: 390px) {
+      .package-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .package-item {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      transition: all 0.15s ease;
+    }
+
+    .package-item:hover {
+      border-color: #86efac;
+      background: #f0fdf4;
+      transform: translateY(-1px);
+    }
+
+    .item-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .item-icon {
+      font-size: 20px;
+    }
+
+    .item-tag {
+      font-size: 9px;
+      font-weight: 800;
+      color: #16a34a;
+      background: #dcfce7;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    .package-item h4 {
+      font-size: 12.5px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.3;
+    }
+
+    .package-item p {
+      font-size: 11px;
+      color: #64748b;
+      line-height: 1.35;
     }
 
     /* Box de Oferta e Preço */
@@ -613,10 +711,10 @@
       </h1>
 
       <p class="upsell-subheadline">
-        Sem ter que esperar os 14 dias inteiros para se sentir leve, com disposição e com os níveis de açúcar totalmente estabilizados.
+        Dobre a velocidade da sua desparasitação e veja os níveis de açúcar despencarem sem mal-estar.
       </p>
 
-      <!-- Card Dra. Ana Lima -->
+      <!-- Card Dra. Ana Lima (Compacto) -->
       <div class="doctor-card">
         <div class="doctor-avatar-wrap">
           <img src="img/ana-lima.png" alt="Dra. Ana Lima" class="doctor-avatar">
@@ -626,69 +724,82 @@
           <h4>Dra. Ana Lima</h4>
           <p>Especialista em Saúde Integrativa</p>
           <div class="doctor-quote">
-            "Parabéns por dar o primeiro passo! Mas se você quer que seu fígado e pâncreas respondam rápido sem qualquer mal-estar, você precisa ver isso."
+            "Veja como a desintoxicação acelerada faz a glicose responder já nas primeiras 48 horas:"
           </div>
         </div>
       </div>
 
-      <!-- Alerta Die-off / Por que acelerar -->
-      <div class="alert-dieoff-box">
-        <div class="alert-dieoff-title">
-          <span>⚠️</span> Por que o corpo precisa de um Acelerador?
-        </div>
-        <p class="alert-dieoff-text">
-          Quando os parasitas começam a morrer nos primeiros dias de desparasitação, eles liberam toxinas que podem sobrecarregar o fígado. Quem tem glicose alta ou esteatose pode sentir <strong>cansaço temporário</strong> ou ver a glicose demorar mais a cair. O <strong>Acelerador Metabólico 3X</strong> neutraliza essas toxinas imediatamente e força a queima de glicose desde o <strong>primeiro dia</strong>.
-        </p>
-      </div>
-
-      <!-- O que vem dentro -->
-      <h3 class="section-title">
-        <span>📦</span> O Que Você Recebe no Acelerador 3X:
-      </h3>
-
-      <div class="features-list">
-        
-        <div class="feature-card">
-          <div class="feature-icon-box">☕</div>
-          <div class="feature-body">
-            <h5>1. Shot Matinal 'Dreno-Hepático' (3 Minutos)</h5>
-            <p>Receita simples de 3 ingredientes caseiros que desentope as vias biliares e expulsa os resíduos dos parasitas na primeira hora da manhã.</p>
-          </div>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-box">📉</div>
-          <div class="feature-body">
-            <h5>2. O Cronograma 'Glicose 99' em 48 Horas</h5>
-            <p>A combinação exata de nutrientes que bloqueia picos glicêmicos após o almoço e jantar, forçando seu medidor a ficar na zona verde.</p>
-          </div>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-box">🌙</div>
-          <div class="feature-body">
-            <h5>3. Ritual Noturno do Pâncreas Reparador</h5>
-            <p>Neutraliza o perigoso 'efeito do alvorecer' (quando a glicose acorda alta em jejum) induzindo sono profundo e reparador.</p>
-          </div>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-box">🆘</div>
-          <div class="feature-body">
-            <h5>4. Guia SOS de Emergência para Dias de Festa</h5>
-            <p>Saiba exatamente o que fazer antes e depois de almoços de família ou eventos para aproveitar sem elevar a glicose.</p>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Prova Social / Glicosímetro -->
+      <!-- 1. PRIMEIRO: CARD DA FOTO / RESULTADO REAL -->
       <div class="proof-card">
-        <span class="proof-badge">Resultado com o Acelerador 3X</span>
-        <img src="img/glicosimetro-240-105.png" alt="Glicose de 240 para 105" class="proof-img">
-        <p class="proof-caption">
-          "Com o Acelerador, meus níveis de glicemia caíram para 105 muito antes dos 14 dias! Me sinto outra pessoa." — <strong>Rita Limeira (RS)</strong>
-        </p>
+        <div class="proof-header">
+          <span class="proof-badge">⚡ RESULTADO REAL EM 48H</span>
+          <span class="proof-status">ALUNA VERIFICADA ✓</span>
+        </div>
+
+        <div class="proof-img-container">
+          <div class="proof-tag-before">ANTES: 240 mg/dL</div>
+          <div class="proof-tag-after">DEPOIS: 105 mg/dL</div>
+          <img src="img/glicosimetro-240-105.png" alt="Glicosímetro antes e depois do acelerador" class="proof-img">
+        </div>
+
+        <div class="proof-user-info">
+          <img src="img/rita-limeira.png" alt="Rita Limeira" class="proof-user-avatar">
+          <div>
+            <div class="proof-user-name">Rita Limeira, 54 anos (RS)</div>
+            <div class="proof-user-quote">"Com o Acelerador, minha glicemia caiu para 105 no 2º dia! Não senti o cansaço das toxinas."</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. DEPOIS: CARD DO QUE É RECEBIDO (FORMATO DE CARD VISUAL E DIRETO AO PONTO) -->
+      <div class="package-container-card">
+        <div class="package-header">
+          <div class="package-icon">📦</div>
+          <div>
+            <h3 class="package-title">O Que Você Recebe no Acelerador 3X</h3>
+            <p class="package-subtitle">4 ferramentas práticas para destravar seu corpo</p>
+          </div>
+        </div>
+
+        <div class="package-grid">
+          
+          <div class="package-item">
+            <div class="item-top">
+              <span class="item-icon">☕</span>
+              <span class="item-tag">PASSO 1</span>
+            </div>
+            <h4>Shot Dreno-Hepático</h4>
+            <p>3 ingredientes caseiros que eliminam toxinas dos parasitas logo cedo.</p>
+          </div>
+
+          <div class="package-item">
+            <div class="item-top">
+              <span class="item-icon">📉</span>
+              <span class="item-tag">PASSO 2</span>
+            </div>
+            <h4>Cronograma Anti-Pico</h4>
+            <p>Nutrientes que travam a glicose na zona verde após cada refeição.</p>
+          </div>
+
+          <div class="package-item">
+            <div class="item-top">
+              <span class="item-icon">🌙</span>
+              <span class="item-tag">PASSO 3</span>
+            </div>
+            <h4>Ritual Noturno do Pâncreas</h4>
+            <p>Combate o pico matinal (alvorecer) para acordar com a glicose verde.</p>
+          </div>
+
+          <div class="package-item">
+            <div class="item-top">
+              <span class="item-icon">🆘</span>
+              <span class="item-tag">PASSO 4</span>
+            </div>
+            <h4>Guia SOS em Festas</h4>
+            <p>O que comer em almoços e eventos sem desregular seu tratamento.</p>
+          </div>
+
+        </div>
       </div>
 
       <!-- Box de Oferta Irresistível -->
