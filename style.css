@@ -332,6 +332,7 @@ body {
 .banner-abertura-img {
   width: 100%;
   height: auto;
+  aspect-ratio: 636 / 1000;
   border-radius: 12px;
   display: block;
   margin-bottom: 16px;

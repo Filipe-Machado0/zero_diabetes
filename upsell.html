@@ -8,6 +8,7 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="img/glicosimetro-240-105.webp" type="image/webp" fetchpriority="high">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -305,6 +306,7 @@
     .proof-img {
       width: 100%;
       height: auto;
+      aspect-ratio: 701 / 688;
       display: block;
     }
 
@@ -717,7 +719,7 @@
       <!-- Card Dra. Ana Lima (Compacto) -->
       <div class="doctor-card">
         <div class="doctor-avatar-wrap">
-          <img src="img/ana-lima.png" alt="Dra. Ana Lima" class="doctor-avatar">
+          <img src="img/ana-lima.webp" alt="Dra. Ana Lima" class="doctor-avatar" width="56" height="56" loading="eager" decoding="async">
           <div class="doctor-verified-badge">✓</div>
         </div>
         <div class="doctor-info">
@@ -739,11 +741,11 @@
         <div class="proof-img-container">
           <div class="proof-tag-before">ANTES: 240 mg/dL</div>
           <div class="proof-tag-after">DEPOIS: 105 mg/dL</div>
-          <img src="img/glicosimetro-240-105.png" alt="Glicosímetro antes e depois do acelerador" class="proof-img">
+          <img src="img/glicosimetro-240-105.webp" width="701" height="688" alt="Glicosímetro antes e depois do acelerador" class="proof-img" loading="eager" fetchpriority="high" decoding="async">
         </div>
 
         <div class="proof-user-info">
-          <img src="img/rita-limeira.png" alt="Rita Limeira" class="proof-user-avatar">
+          <img src="img/rita-limeira.webp" width="44" height="44" alt="Rita Limeira" class="proof-user-avatar" loading="lazy" decoding="async">
           <div>
             <div class="proof-user-name">Rita Limeira, 54 anos (RS)</div>
             <div class="proof-user-quote">"Com o Acelerador, minha glicemia caiu para 105 no 2º dia! Não senti o cansaço das toxinas."</div>
@@ -835,7 +837,7 @@
 
       <!-- Garantia 30 Dias -->
       <div class="guarantee-card">
-        <img src="img/garantia-30-dias.png" alt="Garantia 30 dias" class="guarantee-img">
+        <img src="img/garantia-30-dias.webp" width="62" height="62" alt="Garantia 30 dias" class="guarantee-img" loading="lazy" decoding="async">
         <div class="guarantee-text">
           <h6>Garantia Blindada de 30 Dias</h6>
           <p>Se você colocar o Acelerador em prática e sua glicose não responder nos primeiros dias, devolvemos 100% do seu dinheiro. Risco absolutamente zero.</p>

@@ -12,52 +12,52 @@ const CONFIG = {
 const svgUrl = (svg) => 'data:image/svg+xml;utf8,' + encodeURIComponent(svg.trim());
 
 const ASSETS = {
-  // Imagens reais enviadas pelo usuário
-  bannerAbertura: 'img/banner-abertura.png',
-  avatarMan: 'img/homem.png',
-  avatarWoman: 'img/mulher.png',
-  symptomsGraphic: 'img/sintomas.png',
-  symptomsGraphicMan: 'img/sintomas-homem.jpg',
+  // Imagens otimizadas em formato WebP de alta performance
+  bannerAbertura: 'img/banner-abertura.webp',
+  avatarMan: 'img/homem.webp',
+  avatarWoman: 'img/mulher.webp',
+  symptomsGraphic: 'img/sintomas.webp',
+  symptomsGraphicMan: 'img/sintomas-homem.webp',
   noticiaG1: 'img/noticia-g1.webp',
-  audioProtocolo: (typeof AUDIO_DATA !== 'undefined' && AUDIO_DATA.protocolo) ? AUDIO_DATA.protocolo : 'img/Protocolo-de-Diabetes.mp3',
-  audio2: (typeof AUDIO_DATA !== 'undefined' && AUDIO_DATA.audio2) ? AUDIO_DATA.audio2 : 'img/audio2.mp3',
-  audioProtocoloCriado: (typeof AUDIO_DATA !== 'undefined' && AUDIO_DATA.audio2) ? AUDIO_DATA.audio2 : 'img/audio2.mp3',
-  audioProtocoloGerado: (typeof AUDIO_DATA !== 'undefined' && AUDIO_DATA.protocoloGerado) ? AUDIO_DATA.protocoloGerado : 'img/protocologerado.mp3',
-  casoGlicosimetro: 'img/glicosimetro-240-105.png',
-  casoOnCallPlus: 'img/on-call-plus-355-78.png',
-  carousel198: 'img/carrossel-198.png',
-  carousel108: 'img/carrossel-108.png',
-  carousel588: 'img/carrossel-588.png',
-  carousel107: 'img/carrossel-107.png',
-  cardLoading: 'img/card-loading-protocolo.png',
-  cardOferta: 'img/card-oferta-protocolo.png',
+  audioProtocolo: 'img/Protocolo-de-Diabetes.mp3',
+  audio2: 'img/audio2.mp3',
+  audioProtocoloCriado: 'img/audio2.mp3',
+  audioProtocoloGerado: 'img/protocologerado.mp3',
+  casoGlicosimetro: 'img/glicosimetro-240-105.webp',
+  casoOnCallPlus: 'img/on-call-plus-355-78.webp',
+  carousel198: 'img/carrossel-198.webp',
+  carousel108: 'img/carrossel-108.webp',
+  carousel588: 'img/carrossel-588.webp',
+  carousel107: 'img/carrossel-107.webp',
+  cardLoading: 'img/card-loading-protocolo.webp',
+  cardOferta: 'img/card-oferta-protocolo.webp',
 
   // Parasita real (Ascaris lumbricoides)
-  parasiteMicro: 'img/parasita-ascaris.png',
+  parasiteMicro: 'img/parasita-ascaris.webp',
 
   // Avatar Ana Lima (foto real da especialista)
-  avatarAna: 'img/ana-lima.png',
+  avatarAna: 'img/ana-lima.webp',
 
   // Avatar Rita Limeira (foto real do depoimento etapa 8)
-  avatarRita: 'img/rita-limeira.png',
+  avatarRita: 'img/rita-limeira.webp',
 
   // Avatar Roberta Lira (foto real do depoimento checkout)
-  avatarRoberta: 'img/roberta-lira.png',
+  avatarRoberta: 'img/roberta-lira.webp',
 
   // Abacate (foto real)
-  avocadoImg: 'img/abacate.png',
+  avocadoImg: 'img/abacate.webp',
 
-  // Avatares Antes e Depois do Checkout (adaptativos por gênero com fundo branco)
-  mulherAntes: 'img/mulher-antes.png',
-  mulherDepois: 'img/mulher-depois.png',
-  homemAntes: 'img/homem-antes.png',
-  homemDepois: 'img/homem-depois.png',
+  // Avatares Antes e Depois do Checkout (adaptativos por gênero)
+  mulherAntes: 'img/mulher-antes.webp',
+  mulherDepois: 'img/mulher-depois.webp',
+  homemAntes: 'img/homem-antes.webp',
+  homemDepois: 'img/homem-depois.webp',
 
-  // Banner Garantia 30 Dias (foto real enviada pelo usuário)
-  guaranteeBanner: 'img/garantia-30-dias.png',
+  // Banner Garantia 30 Dias (foto real)
+  guaranteeBanner: 'img/garantia-30-dias.webp',
 
   // Depoimento em Vídeo Maria
-  videoMariaThumb: 'img/depoimento-maria-thumb.jpg'
+  videoMariaThumb: 'img/depoimento-maria-thumb.webp'
 };
 
 /* =========================================================================
@@ -351,7 +351,7 @@ function renderScreen() {
     case 0:
       screenDiv.innerHTML = `
         <div class="banner-abertura-wrap">
-          <img src="${ASSETS.bannerAbertura}" alt="Protocolo da Diabetes" class="banner-abertura-img">
+          <img src="${ASSETS.bannerAbertura}" width="636" height="1000" alt="Protocolo da Diabetes" class="banner-abertura-img" loading="eager" fetchpriority="high" decoding="async">
           <button class="btn-green-bubble" id="btnStartQuiz">
             QUERO APRENDER TAMBÉM !
           </button>
