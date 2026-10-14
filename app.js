@@ -100,10 +100,15 @@ const $topbar = document.getElementById('topbar');
 const TOTAL_STEPS = 18;
 
 function updateProgress() {
+  const $logo = document.querySelector('.topbar-logo-img');
   if (currentScreen === 0) {
+    if ($topbar) $topbar.style.display = 'none';
+    if ($logo) $logo.style.display = 'none';
     $progressBar.style.width = '0%';
     $btnBack.style.visibility = 'hidden';
   } else {
+    if ($topbar) $topbar.style.display = 'flex';
+    if ($logo) $logo.style.display = 'block';
     $btnBack.style.visibility = 'visible';
     const pct = Math.min(100, Math.round((currentScreen / TOTAL_STEPS) * 100));
     $progressBar.style.width = pct + '%';
