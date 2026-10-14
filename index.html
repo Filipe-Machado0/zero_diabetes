@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Protocolo de Diabetes</title>
+  <meta name="theme-color" content="#65a30d">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Cabeçalho fixo com logo e barra de progresso -->
+  <header class="topbar" id="topbar">
+    <div class="topbar-inner">
+      <button class="btn-back" id="btnBack" aria-label="Voltar">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <div class="logo-wrap">
+        <img src="img/logo.png" alt="Diabetes Zero" class="topbar-logo-img">
+      </div>
+      <div class="topbar-spacer"></div>
+    </div>
+    <div class="progress-container" id="progressContainer">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+  </header>
+
+  <!-- Container Principal do App / Telas -->
+  <main class="main-wrapper" id="mainWrapper">
+    <div id="screenContainer" class="screen-container"></div>
+  </main>
+
+  <script src="audio-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
