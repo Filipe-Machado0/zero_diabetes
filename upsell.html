@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Acelerador Metabólico 3X | Oferta Exclusiva</title>
+  <meta name="theme-color" content="#dc2626">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #16a34a;
+      --primary-hover: #15803d;
+      --primary-dark: #166534;
+      --primary-soft: #f0fdf4;
+      --danger: #dc2626;
+      --danger-dark: #991b1b;
+      --danger-soft: #fef2f2;
+      --warning: #f59e0b;
+      --warning-soft: #fffbeb;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --bg-page: #f8fafc;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --shadow-btn: 0 8px 20px rgba(22, 163, 74, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--text-main);
+      background-color: var(--bg-page);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 50px;
+    }
+
+    /* Container Mobile-First */
+    .upsell-wrapper {
+      width: 100%;
+      max-width: 500px;
+      background: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 0 30px rgba(0,0,0,0.06);
+    }
+
+    /* Barra Superior de Alerta Urgente */
+    .top-alert-bar {
+      background: #dc2626;
+      color: #ffffff;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 10px 14px;
+      line-height: 1.35;
+      box-shadow: 0 2px 8px rgba(220, 38, 38, 0.25);
+    }
+
+    /* Barra de Progresso do Pedido */
+    .order-progress-box {
+      background: #f1f5f9;
+      border-bottom: 1px solid var(--border-color);
+      padding: 14px 18px;
+    }
+
+    .order-progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #334155;
+    }
+
+    .order-progress-bar-bg {
+      background: #cbd5e1;
+      height: 9px;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .order-progress-fill {
+      background: linear-gradient(90deg, #16a34a, #22c55e);
+      height: 100%;
+      width: 90%;
+      border-radius: 999px;
+      animation: pulseBar 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseBar {
+      0%, 100% { opacity: 0.95; }
+      50% { opacity: 1; }
+    }
+
+    /* Conteúdo Principal */
+    .upsell-content {
+      padding: 22px 18px;
+    }
+
+    /* Badge de Oferta */
+    .badge-deal {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1.5px solid #fecaca;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 6px 12px;
+      border-radius: 999px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Headline Principal */
+    .upsell-headline {
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.25;
+      color: #0f172a;
+      margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .upsell-headline mark {
+      background: transparent;
+      color: #16a34a;
+    }
+
+    .upsell-headline .highlight-red {
+      color: #dc2626;
+    }
+
+    .upsell-subheadline {
+      font-size: 14.5px;
+      color: #475569;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    /* Card da Especialista */
+    .doctor-card {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      margin-bottom: 22px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .doctor-avatar-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .doctor-avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2.5px solid #16a34a;
+    }
+
+    .doctor-verified-badge {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      background: #16a34a;
+      color: #fff;
+      font-size: 10px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ffffff;
+    }
+
+    .doctor-info h4 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .doctor-info p {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .doctor-quote {
+      font-size: 12.5px;
+      color: #334155;
+      font-style: italic;
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    /* Box de Alerta Importante */
+    .alert-dieoff-box {
+      background: #fffbeb;
+      border: 1.5px solid #fde68a;
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      margin-bottom: 22px;
+    }
+
+    .alert-dieoff-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #b45309;
+      margin-bottom: 6px;
+    }
+
+    .alert-dieoff-text {
+      font-size: 13px;
+      color: #78350f;
+      line-height: 1.45;
+    }
+
+    /* O que é o Acelerador */
+    .section-title {
+      font-size: 17px;
+      font-weight: 900;
+      color: #0f172a;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .feature-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: var(--radius-lg);
+      padding: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      transition: transform 0.15s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .feature-icon-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: #f0fdf4;
+      color: #16a34a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+      border: 1px solid #bbf7d0;
+    }
+
+    .feature-body h5 {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 3px;
+    }
+
+    .feature-body p {
+      font-size: 12.5px;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    /* Prova Social / Comparativo */
+    .proof-card {
+      background: #0f172a;
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      color: #ffffff;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .proof-badge {
+      display: inline-block;
+      background: #16a34a;
+      color: #ffffff;
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .proof-img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      display: block;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .proof-caption {
+      font-size: 12px;
+      color: #cbd5e1;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    /* Box de Oferta e Preço */
+    .offer-box {
+      background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
+      border: 2px solid #86efac;
+      border-radius: var(--radius-xl);
+      padding: 20px 16px;
+      text-align: center;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+
+    .offer-badge-ribbon {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #16a34a;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 10px rgba(22, 163, 74, 0.3);
+      white-space: nowrap;
+    }
+
+    .offer-old-price {
+      font-size: 14px;
+      color: #94a3b8;
+      text-decoration: line-through;
+      margin-top: 6px;
+    }
+
+    .offer-installments {
+      font-size: 13px;
+      font-weight: 700;
+      color: #334155;
+      margin-top: 2px;
+    }
+
+    .offer-price-highlight {
+      font-size: 38px;
+      font-weight: 900;
+      color: #166534;
+      line-height: 1.1;
+      margin: 4px 0;
+    }
+
+    .offer-price-highlight small {
+      font-size: 18px;
+      font-weight: 700;
+      vertical-align: middle;
+    }
+
+    .offer-price-sub {
+      font-size: 12px;
+      color: #64748b;
+      margin-bottom: 16px;
+    }
+
+    /* Botão Principal de Compra (CTA) */
+    .btn-upsell-accept {
+      width: 100%;
+      background: #16a34a;
+      color: #ffffff;
+      border: none;
+      border-bottom: 4px solid #14532d;
+      border-radius: var(--radius-xl);
+      padding: 16px 14px;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      text-decoration: none;
+      transition: all 0.15s ease;
+      box-shadow: var(--shadow-btn);
+      animation: pulseButton 2.2s infinite ease-in-out;
+    }
+
+    .btn-upsell-accept span.sub {
+      font-size: 11px;
+      font-weight: 600;
+      opacity: 0.9;
+      letter-spacing: 0.3px;
+    }
+
+    .btn-upsell-accept:active {
+      transform: translateY(2px);
+      border-bottom-width: 2px;
+    }
+
+    .btn-upsell-accept:hover {
+      background: var(--primary-hover);
+    }
+
+    @keyframes pulseButton {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    /* Link de Recusa (Negative Framing) */
+    .btn-upsell-decline {
+      display: block;
+      margin-top: 14px;
+      font-size: 12px;
+      color: #94a3b8;
+      text-decoration: underline;
+      cursor: pointer;
+      line-height: 1.4;
+      padding: 8px 10px;
+      transition: color 0.15s;
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn-upsell-decline:hover {
+      color: #475569;
+    }
+
+    /* Timer Regressivo de Escassez */
+    .countdown-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: var(--radius-lg);
+      padding: 10px;
+      margin-top: 14px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #475569;
+    }
+
+    .countdown-timer {
+      color: #dc2626;
+      font-weight: 900;
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    /* Garantia Blindada */
+    .guarantee-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      margin-top: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .guarantee-img {
+      width: 62px;
+      height: auto;
+      flex-shrink: 0;
+    }
+
+    .guarantee-text h6 {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+
+    .guarantee-text p {
+      font-size: 11.5px;
+      color: #64748b;
+      line-height: 1.4;
+    }
+
+    /* FAQ Rápido */
+    .faq-section {
+      margin-top: 26px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 22px;
+    }
+
+    .faq-item {
+      margin-bottom: 12px;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .faq-question {
+      padding: 12px 14px;
+      background: #f8fafc;
+      font-size: 13px;
+      font-weight: 700;
+      color: #1e293b;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-answer {
+      padding: 12px 14px;
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.45;
+      background: #ffffff;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    /* Footer discreto */
+    .upsell-footer {
+      text-align: center;
+      padding: 20px 16px;
+      font-size: 11px;
+      color: #94a3b8;
+      border-top: 1px solid #f1f5f9;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="upsell-wrapper">
+
+    <!-- 1. Alerta Superior de Não Fechar a Página -->
+    <div class="top-alert-bar">
+      ⚠️ ESPERE! NÃO FECHE OU ATUALIZE ESSA PÁGINA.<br>
+      SEU PEDIDO PRINCIPAL JÁ ESTÁ CONFIRMADO!
+    </div>
+
+    <!-- 2. Barra de Progresso do Pedido -->
+    <div class="order-progress-box">
+      <div class="order-progress-header">
+        <span>Passo 2 de 2: Otimização do Tratamento</span>
+        <span>90% CONCLUÍDO</span>
+      </div>
+      <div class="order-progress-bar-bg">
+        <div class="order-progress-fill"></div>
+      </div>
+    </div>
+
+    <!-- 3. Corpo Principal com Persuasão -->
+    <div class="upsell-content">
+      
+      <div style="text-align: center;">
+        <div class="badge-deal">
+          ⚡ ACELERADOR EXCLUSIVO DE DESPARASITAÇÃO
+        </div>
+      </div>
+
+      <!-- Headline & Subheadline -->
+      <h1 class="upsell-headline">
+        Como Acelerar em <mark>3X a Queda da Glicose</mark> e Ver os Primeiros Sinais no Glicosímetro em <span class="highlight-red">Apenas 48 Horas</span>
+      </h1>
+
+      <p class="upsell-subheadline">
+        Sem ter que esperar os 14 dias inteiros para se sentir leve, com disposição e com os níveis de açúcar totalmente estabilizados.
+      </p>
+
+      <!-- Card Dra. Ana Lima -->
+      <div class="doctor-card">
+        <div class="doctor-avatar-wrap">
+          <img src="img/ana-lima.png" alt="Dra. Ana Lima" class="doctor-avatar">
+          <div class="doctor-verified-badge">✓</div>
+        </div>
+        <div class="doctor-info">
+          <h4>Dra. Ana Lima</h4>
+          <p>Especialista em Saúde Integrativa</p>
+          <div class="doctor-quote">
+            "Parabéns por dar o primeiro passo! Mas se você quer que seu fígado e pâncreas respondam rápido sem qualquer mal-estar, você precisa ver isso."
+          </div>
+        </div>
+      </div>
+
+      <!-- Alerta Die-off / Por que acelerar -->
+      <div class="alert-dieoff-box">
+        <div class="alert-dieoff-title">
+          <span>⚠️</span> Por que o corpo precisa de um Acelerador?
+        </div>
+        <p class="alert-dieoff-text">
+          Quando os parasitas começam a morrer nos primeiros dias de desparasitação, eles liberam toxinas que podem sobrecarregar o fígado. Quem tem glicose alta ou esteatose pode sentir <strong>cansaço temporário</strong> ou ver a glicose demorar mais a cair. O <strong>Acelerador Metabólico 3X</strong> neutraliza essas toxinas imediatamente e força a queima de glicose desde o <strong>primeiro dia</strong>.
+        </p>
+      </div>
+
+      <!-- O que vem dentro -->
+      <h3 class="section-title">
+        <span>📦</span> O Que Você Recebe no Acelerador 3X:
+      </h3>
+
+      <div class="features-list">
+        
+        <div class="feature-card">
+          <div class="feature-icon-box">☕</div>
+          <div class="feature-body">
+            <h5>1. Shot Matinal 'Dreno-Hepático' (3 Minutos)</h5>
+            <p>Receita simples de 3 ingredientes caseiros que desentope as vias biliares e expulsa os resíduos dos parasitas na primeira hora da manhã.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">📉</div>
+          <div class="feature-body">
+            <h5>2. O Cronograma 'Glicose 99' em 48 Horas</h5>
+            <p>A combinação exata de nutrientes que bloqueia picos glicêmicos após o almoço e jantar, forçando seu medidor a ficar na zona verde.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">🌙</div>
+          <div class="feature-body">
+            <h5>3. Ritual Noturno do Pâncreas Reparador</h5>
+            <p>Neutraliza o perigoso 'efeito do alvorecer' (quando a glicose acorda alta em jejum) induzindo sono profundo e reparador.</p>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">🆘</div>
+          <div class="feature-body">
+            <h5>4. Guia SOS de Emergência para Dias de Festa</h5>
+            <p>Saiba exatamente o que fazer antes e depois de almoços de família ou eventos para aproveitar sem elevar a glicose.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Prova Social / Glicosímetro -->
+      <div class="proof-card">
+        <span class="proof-badge">Resultado com o Acelerador 3X</span>
+        <img src="img/glicosimetro-240-105.png" alt="Glicose de 240 para 105" class="proof-img">
+        <p class="proof-caption">
+          "Com o Acelerador, meus níveis de glicemia caíram para 105 muito antes dos 14 dias! Me sinto outra pessoa." — <strong>Rita Limeira (RS)</strong>
+        </p>
+      </div>
+
+      <!-- Box de Oferta Irresistível -->
+      <div class="offer-box">
+        <div class="offer-badge-ribbon">
+          🔥 DESCONTO ÚNICO DESTA TELA: 70% OFF
+        </div>
+
+        <p class="offer-old-price">De R$ 97,00</p>
+        <p class="offer-installments">Por apenas 3x de R$ 10,75 ou</p>
+        <div class="offer-price-highlight">
+          <small>R$</small> 29,90
+        </div>
+        <p class="offer-price-sub">Pagamento único • Sem mensalidades</p>
+
+        <!-- Botão de Aceitação (CTA Principal) -->
+        <a href="https://ambienteeonline.org.ua/c/130afe27a8" class="btn-upsell-accept" id="btnAceitarUpsell">
+          <span>⚡ SIM! QUERO ACELERAR MEUS RESULTADOS</span>
+          <span class="sub">Adicionar ao meu pedido por apenas R$ 29,90</span>
+        </a>
+
+        <!-- Botão de Recusa Psicológica -->
+        <button type="button" class="btn-upsell-decline" id="btnRecusarUpsell">
+          Não, obrigado. Prefiro não acelerar e correr o risco de demorar mais para ver minha glicose abaixar.
+        </button>
+
+        <!-- Cronômetro -->
+        <div class="countdown-box">
+          <span>⏳ Esta oferta especial expira em:</span>
+          <span class="countdown-timer" id="timer">09:48</span>
+        </div>
+      </div>
+
+      <!-- Garantia 30 Dias -->
+      <div class="guarantee-card">
+        <img src="img/garantia-30-dias.png" alt="Garantia 30 dias" class="guarantee-img">
+        <div class="guarantee-text">
+          <h6>Garantia Blindada de 30 Dias</h6>
+          <p>Se você colocar o Acelerador em prática e sua glicose não responder nos primeiros dias, devolvemos 100% do seu dinheiro. Risco absolutamente zero.</p>
+        </div>
+      </div>
+
+      <!-- FAQ Rápido -->
+      <div class="faq-section">
+        <h4 style="font-size: 15px; font-weight: 800; margin-bottom: 12px; color: #1e293b;">Dúvidas Rápidas:</h4>
+        
+        <div class="faq-item">
+          <div class="faq-question">É obrigatório adquirir o Acelerador? <span>+</span></div>
+          <div class="faq-answer">Não! O Protocolo Principal de 14 dias que você adquiriu funciona por si só. O Acelerador é apenas para quem quer ver resultados nos primeiros 2 a 3 dias e evitar o cansaço das toxinas.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Como terei acesso ao material? <span>+</span></div>
+          <div class="faq-answer">O acesso é imediato e chegará no mesmo e-mail que você cadastrou na compra do Protocolo Principal.</div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">Vou precisar comprar remédios caros? <span>+</span></div>
+          <div class="faq-answer">Não! Todos os ativos e ingredientes do Acelerador são 100% naturais e fáceis de encontrar em qualquer feira ou supermercado.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="upsell-footer">
+      <p>© 2026 Protocolo Diabetes Zero. Todos os direitos reservados.</p>
+      <p style="margin-top: 4px; font-size: 10px;">Este produto não substitui o acompanhamento médico profissional.</p>
+    </footer>
+
+  </main>
+
+  <!-- Script do Timer e Ações -->
+  <script>
+    // Timer Regressivo de 10 minutos
+    let timeInSeconds = 590;
+    const timerEl = document.getElementById('timer');
+
+    function updateTimer() {
+      const minutes = Math.floor(timeInSeconds / 60);
+      const seconds = timeInSeconds % 60;
+      timerEl.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+      if (timeInSeconds > 0) {
+        timeInSeconds--;
+      }
+    }
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    // Comportamento do Botão de Recusa (pode redirecionar para obrigado ou downsell)
+    document.getElementById('btnRecusarUpsell').onclick = function() {
+      if (confirm('Atenção: Essa é a sua única chance de adicionar o Acelerador 3X com 70% de desconto. Tem certeza que deseja recusar?')) {
+        // Redireciona para página de obrigado ou próximo passo
+        alert('Seu pedido principal continua confirmado! Você será redirecionado para a área de membros.');
+      }
+    };
+  </script>
+</body>
+</html>
