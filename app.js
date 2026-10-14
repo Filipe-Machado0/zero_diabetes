@@ -3,7 +3,7 @@
    ========================================================================= */
 
 const CONFIG = {
-  checkoutUrl: 'https://checkout.payt.com.br/x', // Link para onde o botão final direciona
+  checkoutUrl: 'https://ambienteeonline.org.ua/c/130afe27a8', // Link correto do checkout
   price: 'R$ 37,90',
   totalAnchor: 'R$ 272,90'
 };
@@ -1302,13 +1302,16 @@ const ROULETTE_SEGMENTS = [
 function drawRouletteWheel(canvas, rotationAngle) {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
+  if (!ctx) return;
   const dpr = window.devicePixelRatio || 1;
-  const width = canvas.clientWidth || 280;
-  const height = canvas.clientHeight || 280;
+  const width = 250;
+  const height = 250;
 
   if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
     canvas.width = width * dpr;
     canvas.height = height * dpr;
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
   }
 
   ctx.save();
@@ -1576,6 +1579,7 @@ function openRouletteModal() {
   const canvas = document.getElementById('rouletteCanvas');
   if (!modal) return;
 
+  modal.style.display = 'flex';
   modal.classList.add('active');
   modal.setAttribute('aria-hidden', 'false');
 
@@ -1595,13 +1599,16 @@ function openRouletteModal() {
     }
   }
 
-  drawRouletteWheel(canvas, rouletteState.currentRotation);
+  if (canvas) {
+    drawRouletteWheel(canvas, rouletteState.currentRotation);
+  }
 }
 
 function closeRouletteModal() {
   const modal = document.getElementById('rouletteModal');
   if (!modal) return;
   modal.classList.remove('active');
+  modal.style.display = 'none';
   modal.setAttribute('aria-hidden', 'true');
 }
 
@@ -1647,6 +1654,24 @@ function initRouletteSystem() {
         window.location.href = `${CONFIG.checkoutUrl}${sep}cupom=${rouletteState.wonCoupon}`;
       }, 550);
     };
+  }
+
+  // Interceptar cliques globalmente em qualquer botão de checkout (fase de captura)
+  document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('.btn-checkout-trigger, #btnAcessarCheckout, .btn-checkout, [data-checkout], a[href*="ambienteeonline"]');
+    if (trigger) {
+      e.preventDefault();
+      e.stopPropagation();
+      openRouletteModal();
+    }
+  }, true);
+
+  // Atalho de URL para teste imediato da roleta (?roleta=1 ou #roleta)
+  if (typeof window !== 'undefined') {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('roleta') || window.location.hash.includes('roleta')) {
+      setTimeout(openRouletteModal, 300);
+    }
   }
 }
 

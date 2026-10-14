@@ -1253,27 +1253,23 @@ body {
 .roulette-modal {
   position: fixed;
   inset: 0;
-  z-index: 99999;
-  display: flex;
+  z-index: 999999 !important;
+  display: none;
   align-items: center;
   justify-content: center;
   padding: 16px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
+  background: rgba(15, 23, 42, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .roulette-modal.active {
-  opacity: 1;
-  pointer-events: auto;
+  display: flex !important;
 }
 
 .roulette-backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(15, 23, 42, 0.78);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
 }
 
 .roulette-dialog {
@@ -1282,17 +1278,19 @@ body {
   background: #ffffff;
   width: 100%;
   max-width: 370px;
+  max-height: 94vh;
+  overflow-y: auto;
   border-radius: 22px;
   padding: 24px 18px 20px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0,0,0,0.05);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0,0,0,0.08);
   text-align: center;
-  overflow: hidden;
-  transform: scale(0.85);
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 2px solid #22c55e;
+  animation: popInModal 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.roulette-modal.active .roulette-dialog {
-  transform: scale(1);
+@keyframes popInModal {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 .roulette-close-btn {
