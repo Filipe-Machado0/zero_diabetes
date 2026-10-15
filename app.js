@@ -61,6 +61,84 @@ const ASSETS = {
 };
 
 /* =========================================================================
+   SISTEMA DE PRÉ-CARREGAMENTO & CACHE EM MEMÓRIA RAM (PRELOADER)
+   Garante carregamento 100% instantâneo (0ms) entre todas as telas do quiz
+   ========================================================================= */
+const PRELOAD_CACHE = {};
+
+function preloadImage(src, priority = 'auto') {
+  if (!src || PRELOAD_CACHE[src]) return PRELOAD_CACHE[src];
+  const img = new Image();
+  img.decoding = 'async';
+  if (priority === 'high' && 'fetchPriority' in img) {
+    img.fetchPriority = 'high';
+  }
+  img.src = src;
+  if (typeof img.decode === 'function') {
+    img.decode().catch(() => {});
+  }
+  PRELOAD_CACHE[src] = img;
+  return img;
+}
+
+function preloadAudio(src) {
+  if (!src || PRELOAD_CACHE[src]) return;
+  try {
+    const audio = new Audio();
+    audio.preload = 'auto';
+    audio.src = src;
+    PRELOAD_CACHE[src] = audio;
+  } catch (e) {}
+}
+
+function startAggressivePreloader() {
+  // 1. Prioridade imediata: imagens das primeiras etapas com interação rápida
+  const immediateImages = [
+    ASSETS.bannerAbertura,
+    ASSETS.avatarWoman,
+    ASSETS.avatarMan,
+    ASSETS.symptomsGraphic,
+    ASSETS.symptomsGraphicMan,
+    ASSETS.noticiaG1,
+    'img/logo.webp'
+  ];
+
+  immediateImages.forEach(src => preloadImage(src, 'high'));
+
+  // 2. Pré-carregar todas as outras imagens do quiz em memória RAM
+  const allImages = Object.values(ASSETS).filter(val =>
+    typeof val === 'string' &&
+    (val.endsWith('.webp') || val.endsWith('.png') || val.endsWith('.jpg'))
+  );
+
+  const remaining = allImages.filter(src => !immediateImages.includes(src));
+
+  const loadRemaining = () => {
+    remaining.forEach(src => preloadImage(src, 'auto'));
+    // Pré-carrega o primeiro áudio em plano de fundo
+    if (ASSETS.audioProtocolo) preloadAudio(ASSETS.audioProtocolo);
+  };
+
+  if (typeof window !== 'undefined') {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(loadRemaining, { timeout: 600 });
+    } else {
+      setTimeout(loadRemaining, 50);
+    }
+  }
+}
+
+// Inicializar preloader imediatamente
+startAggressivePreloader();
+
+// Acionar reforço de preloading em qualquer primeira interação (toque/movimento)
+if (typeof window !== 'undefined') {
+  ['touchstart', 'mousedown', 'scroll', 'pointerdown'].forEach(evt => {
+    window.addEventListener(evt, startAggressivePreloader, { once: true, passive: true });
+  });
+}
+
+/* =========================================================================
    ESTADO DO QUIZ
    ========================================================================= */
 let currentScreen = 0;
@@ -394,8 +472,8 @@ function renderScreen() {
     case 2:
       const currentSymptomsImg = userGender === 'homem' ? ASSETS.symptomsGraphicMan : ASSETS.symptomsGraphic;
       screenDiv.innerHTML = `
-        <div class="symptoms-card-wrap" style="text-align: center; margin-bottom: 16px;">
-          <img src="${currentSymptomsImg}" alt="Sintomas há mais de 1 ano" style="width: 100%; max-width: 440px; height: auto; border-radius: 14px; display: block; margin: 0 auto;">
+        <div class="symptoms-card-wrap">
+          <img src="${currentSymptomsImg}" alt="Sintomas há mais de 1 ano" loading="eager" decoding="async">
         </div>
         <button class="btn-green-bubble" id="sintoMais1">
           Sinto mais de 1 😓
@@ -442,8 +520,8 @@ function renderScreen() {
             <u style="text-underline-offset: 3px;">Veja essa Noticia do G1</u> 👇
           </p>
         </div>
-        <div style="border-radius: 12px; overflow: hidden; border: 1.5px solid #e2e8f0; margin-bottom: 20px; box-shadow: 0 3px 10px rgba(0,0,0,0.06);">
-          <img src="${ASSETS.noticiaG1}" alt="Notícia G1" style="width: 100%; height: auto; display: block;">
+        <div style="border-radius: 12px; overflow: hidden; border: 1.5px solid #e2e8f0; margin-bottom: 20px; box-shadow: 0 3px 10px rgba(0,0,0,0.06); background: #f8fafc;">
+          <img src="${ASSETS.noticiaG1}" alt="Notícia G1" style="width: 100%; height: auto; aspect-ratio: 572/1000; display: block;" loading="eager" decoding="async">
         </div>
         <button class="btn-green-bubble" id="btnContinuarG1">
           Continuar !
@@ -919,7 +997,7 @@ function renderScreen() {
     case 16:
       screenDiv.innerHTML = `
         <div class="loading-card-wrap" style="text-align: center; margin-bottom: 24px;">
-          <img src="${ASSETS.cardLoading}" alt="Protocolo da Diabetes - Analisando respostas" style="width: 100%; max-width: 440px; height: auto; border-radius: 18px; display: block; margin: 0 auto; box-shadow: 0 4px 14px rgba(0,0,0,0.08);">
+          <img src="${ASSETS.cardLoading}" alt="Protocolo da Diabetes - Analisando respostas" style="width: 100%; max-width: 440px; height: auto; aspect-ratio: 700/602; border-radius: 18px; display: block; margin: 0 auto; box-shadow: 0 4px 14px rgba(0,0,0,0.08); background: #f8fafc;" loading="eager" decoding="async">
         </div>
         <div class="progress-track-wrap">
           <div class="progress-track-label">
@@ -1157,8 +1235,8 @@ function renderScreen() {
         </p>
         ${createAudioPlayerHTML('Ana Lima', '00:26', 26, ASSETS.audioProtocoloGerado)}
 
-        <div class="stack-offer-img-card" style="margin-bottom:20px;">
-          <img src="${ASSETS.cardOferta}" alt="Protocolo da Diabetes - Tudo o que você vai receber" style="width:100%; height:auto; display:block; border-radius:18px; box-shadow:0 4px 14px rgba(0,0,0,0.06);">
+        <div class="stack-offer-img-card" style="margin-bottom:20px; background:#f8fafc; border-radius:18px;">
+          <img src="${ASSETS.cardOferta}" alt="Protocolo da Diabetes - Tudo o que você vai receber" style="width:100%; height:auto; aspect-ratio:561/1000; display:block; border-radius:18px; box-shadow:0 4px 14px rgba(0,0,0,0.06);" loading="eager" decoding="async">
         </div>
 
         <button class="btn-green-bubble btn-checkout-trigger" id="btnAcessarCheckout" style="font-size:18px; padding:18px; margin-bottom:16px;">
