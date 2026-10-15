@@ -6,6 +6,21 @@
   <title>Acelerador Metabólico 3X | Oferta Exclusiva</title>
   <meta name="theme-color" content="#dc2626">
   <meta name="referrer" content="strict-origin-when-cross-origin">
+  <script type="text/javascript">
+    //digite a url de redirect
+    var url_link_redirect_pc = "https://www.cnnbrasil.com.br/tudo-sobre/diabetes/";
+
+    //function js
+    function isMobile() {
+     const regex = /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+     return regex.test(navigator.userAgent);
+    }
+
+    //validation js
+    if (isMobile()) { console.log("Mobile device detected"); } else {
+     window.location = url_link_redirect_pc;
+    }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="image" href="img/glicosimetro-240-105.webp" type="image/webp" fetchpriority="high">
