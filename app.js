@@ -1596,6 +1596,85 @@ function triggerConfetti() {
   requestAnimationFrame(animate);
 }
 
+let redirectTimer = null;
+let redirectInterval = null;
+
+// Construtor robusto da URL do checkout preservando parâmetros e UTMs
+function buildCheckoutUrl(couponCode = 'CUPOM5') {
+  try {
+    const url = new URL(CONFIG.checkoutUrl);
+    if (typeof window !== 'undefined' && window.location.search) {
+      const currentParams = new URLSearchParams(window.location.search);
+      currentParams.forEach((val, key) => {
+        if (key !== 'etapa' && key !== 'genero' && key !== 'roleta') {
+          url.searchParams.set(key, val);
+        }
+      });
+    }
+    if (couponCode) {
+      url.searchParams.set('cupom', couponCode);
+    }
+    return url.toString();
+  } catch (e) {
+    const sep = CONFIG.checkoutUrl.includes('?') ? '&' : '?';
+    return `${CONFIG.checkoutUrl}${sep}cupom=${couponCode}`;
+  }
+}
+
+// Aquecimento prévio da conexão para o domínio do checkout
+function warmupCheckoutConnection() {
+  try {
+    const targetUrl = buildCheckoutUrl(rouletteState.wonCoupon);
+    let prefetch = document.getElementById('checkoutPrefetchLink');
+    if (!prefetch) {
+      prefetch = document.createElement('link');
+      prefetch.id = 'checkoutPrefetchLink';
+      prefetch.rel = 'prefetch';
+      prefetch.href = targetUrl;
+      document.head.appendChild(prefetch);
+    }
+  } catch (e) {}
+}
+
+function redirectToCheckout() {
+  if (redirectTimer) clearTimeout(redirectTimer);
+  if (redirectInterval) clearInterval(redirectInterval);
+
+  const checkoutBtn = document.getElementById('btnIrCheckoutComCupom');
+  if (checkoutBtn) {
+    checkoutBtn.disabled = true;
+    checkoutBtn.innerHTML = '⚡ INDO PARA O CHECKOUT... 🚀';
+    checkoutBtn.style.opacity = '0.9';
+  }
+
+  // Cópia silenciosa do cupom
+  copyCouponToClipboard(rouletteState.wonCoupon, true);
+
+  const finalUrl = buildCheckoutUrl(rouletteState.wonCoupon);
+  // Redirecionamento instantâneo
+  window.location.href = finalUrl;
+}
+
+function startAutoCheckoutRedirect() {
+  let secondsLeft = 2;
+  const secEl = document.getElementById('redirectSeconds');
+  if (secEl) secEl.textContent = secondsLeft;
+
+  if (redirectInterval) clearInterval(redirectInterval);
+  redirectInterval = setInterval(() => {
+    secondsLeft--;
+    if (secEl) secEl.textContent = Math.max(0, secondsLeft);
+    if (secondsLeft <= 0) {
+      clearInterval(redirectInterval);
+    }
+  }, 1000);
+
+  if (redirectTimer) clearTimeout(redirectTimer);
+  redirectTimer = setTimeout(() => {
+    redirectToCheckout();
+  }, 2000);
+}
+
 function spinRoulette() {
   if (rouletteState.isSpinning) return;
   rouletteState.isSpinning = true;
@@ -1607,23 +1686,22 @@ function spinRoulette() {
   }
 
   const canvas = document.getElementById('rouletteCanvas');
-  const spinDuration = 4200; // 4.2 segundos
+  // Duração ultra ágil: 1.3 segundos (dinâmico e sem travar a conversão)
+  const spinDuration = 1300; 
   const startTime = performance.now();
   const startAngle = rouletteState.currentRotation;
 
-  // Alvo: Sempre parar exatamente na fatia 0 ("5% OFF").
-  // Como a fatia 0 está centrada em 0 rad, e o ponteiro está no topo (1.5 * PI = 270°),
-  // a rotação final necessária que alinha a fatia 0 com o topo é:
-  const fullSpins = 6;
-  const wobble = (Math.random() * 16 - 8) * (Math.PI / 180); // Variação suave de +/- 8 graus
+  // Alvo: Sempre parar exatamente na fatia 0 ("5% OFF")
+  const fullSpins = 3;
+  const wobble = (Math.random() * 8 - 4) * (Math.PI / 180);
   const targetAngle = startAngle + (fullSpins * 2 * Math.PI) + (1.5 * Math.PI) - (startAngle % (2 * Math.PI)) + wobble;
 
   function animate(now) {
     const elapsed = now - startTime;
     const t = Math.min(elapsed / spinDuration, 1);
 
-    // Desaceleração realista
-    const easeOut = 1 - Math.pow(1 - t, 3.6);
+    // Desaceleração suave e rápida
+    const easeOut = 1 - Math.pow(1 - t, 3.2);
     const currentAngle = startAngle + (targetAngle - startAngle) * easeOut;
     rouletteState.currentRotation = currentAngle;
 
@@ -1635,22 +1713,25 @@ function spinRoulette() {
       rouletteState.isSpinning = false;
       rouletteState.hasSpun = true;
 
-      // Vibração
+      // Vibração tátil
       if (navigator.vibrate) {
-        try { navigator.vibrate([100, 50, 100]); } catch (e) {}
+        try { navigator.vibrate([80, 40, 80]); } catch (e) {}
       }
 
       // Confetes
       triggerConfetti();
 
-      // Exibir área de vitória
-      setTimeout(() => {
-        const preSpin = document.getElementById('roulettePreSpin');
-        const postSpin = document.getElementById('roulettePostSpin');
-        if (preSpin) preSpin.style.display = 'none';
-        if (postSpin) postSpin.style.display = 'block';
-        showToast('🎉 Parabéns! Você ganhou 5% de desconto!');
-      }, 500);
+      // Exibir área de vitória IMEDIATAMENTE (sem delay de 500ms)
+      const preSpin = document.getElementById('roulettePreSpin');
+      const postSpin = document.getElementById('roulettePostSpin');
+      if (preSpin) preSpin.style.display = 'none';
+      if (postSpin) postSpin.style.display = 'block';
+
+      // Auto-copiar cupom
+      copyCouponToClipboard(rouletteState.wonCoupon, true);
+
+      // Iniciar contagem regressiva para auto-redirecionamento rápido (2s)
+      startAutoCheckoutRedirect();
     }
   }
 
@@ -1666,6 +1747,9 @@ function openRouletteModal() {
   modal.classList.add('active');
   modal.setAttribute('aria-hidden', 'false');
 
+  // Aquecer conexão do checkout
+  warmupCheckoutConnection();
+
   const preSpin = document.getElementById('roulettePreSpin');
   const postSpin = document.getElementById('roulettePostSpin');
   const spinBtn = document.getElementById('btnGirarRoleta');
@@ -1673,6 +1757,7 @@ function openRouletteModal() {
   if (rouletteState.hasSpun) {
     if (preSpin) preSpin.style.display = 'none';
     if (postSpin) postSpin.style.display = 'block';
+    startAutoCheckoutRedirect();
   } else {
     if (preSpin) preSpin.style.display = 'block';
     if (postSpin) postSpin.style.display = 'none';
@@ -1680,6 +1765,12 @@ function openRouletteModal() {
       spinBtn.disabled = false;
       spinBtn.textContent = 'GIRAR A ROLETA AGORA! 🎰';
     }
+    // Auto-iniciar giro rápido após 350ms para eliminar atrito
+    setTimeout(() => {
+      if (!rouletteState.isSpinning && !rouletteState.hasSpun) {
+        spinRoulette();
+      }
+    }, 350);
   }
 
   if (canvas) {
@@ -1688,6 +1779,8 @@ function openRouletteModal() {
 }
 
 function closeRouletteModal() {
+  if (redirectTimer) clearTimeout(redirectTimer);
+  if (redirectInterval) clearInterval(redirectInterval);
   const modal = document.getElementById('rouletteModal');
   if (!modal) return;
   modal.classList.remove('active');
@@ -1729,13 +1822,9 @@ function initRouletteSystem() {
   }
 
   if (checkoutWithCouponBtn) {
-    checkoutWithCouponBtn.onclick = () => {
-      copyCouponToClipboard(rouletteState.wonCoupon, true);
-      showToast(`✓ Cupom ${rouletteState.wonCoupon} copiado! Redirecionando...`);
-      setTimeout(() => {
-        const sep = CONFIG.checkoutUrl.includes('?') ? '&' : '?';
-        window.location.href = `${CONFIG.checkoutUrl}${sep}cupom=${rouletteState.wonCoupon}`;
-      }, 550);
+    checkoutWithCouponBtn.onclick = (e) => {
+      e.preventDefault();
+      redirectToCheckout();
     };
   }
 
@@ -1745,7 +1834,12 @@ function initRouletteSystem() {
     if (trigger) {
       e.preventDefault();
       e.stopPropagation();
-      openRouletteModal();
+      if (rouletteState.hasSpun) {
+        // Se já rodou a roleta anteriormente, vai direto pro checkout em 0ms
+        redirectToCheckout();
+      } else {
+        openRouletteModal();
+      }
     }
   }, true);
 
@@ -1753,7 +1847,7 @@ function initRouletteSystem() {
   if (typeof window !== 'undefined') {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('roleta') || window.location.hash.includes('roleta')) {
-      setTimeout(openRouletteModal, 300);
+      setTimeout(openRouletteModal, 200);
     }
   }
 }
